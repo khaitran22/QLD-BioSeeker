@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Queensland Bioseek</title>
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Reference from: https://getbootstrap.com/ -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+	<!-- Reference from Font Awesome: https://fontawesome.com/ -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+
+	<!-- Reference from: https://fonts.google.com/,  -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Montserrat&display=swap"
+		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+	<meta name="description"
+		content="bioseek, rainforest, ecosystems, australia, queensland, daintree, birds, reptiles, fish, mammals.">
+	<link rel="icon" type="image/png" href="./images/cassowary_favicon.png">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<!-- Reference from: https://jquery.com/ -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<!-- SPLASH PAGE-->
+	<div id="splashWrapper">
+		<div id="splashContainer">
+			<img src="images/BioSeek_logo_horizontal.png" alt="bioseek" class="logo">
+			<br>
+			<br>
+			<br>
+			<p id="splashSub">Welcome to The Rainforest Environment</p>
+			<br>
+			<p id="splashContent">In this experience you take the role of a field zoologists tasked to find and study
+				animals hidden
+				in their habitat
+				<br>
+				<br>
+				Finding the animals will reveal valuable information about them and once you find them all you can move
+				to
+				the next enviroment
+				<br>
+				<br>
+				You can keep track of what you have found in the bottom left
+			</p>
+			<br>
+			<p id="splashSub">CONTINUE?</p>
+
+			<div id="closeCon">
+				<button id="close" onclick="closeSplash()"><i class="far fa-arrow-alt-circle-right"></i></button>
+
+			</div>
+		</div>
+
+	</div>
+	<!-- SPLASH PAGE-->
+
+	<!-- BACKGROUND IMAGES -->
+	<div id="background-image"></div>
+	<!-- <img src="images/BioSeek_logo_horizontal.png" alt="bioseek" class="logo"> -->
+
+	<!-- CASSOWARY -->
+	<img id="cassowary_animal" class="cassowary" src="./images/Cassowary.png">
+	<img class="cassowary_cover" src="./images/Cassowary_Cover.png">
+
+
+	<!-- SNAKE -->
+	<img id="brown_snake_animal" class="brown_snake" src="./images/brown_snake.png">
+
+	<!-- TREE KANGAROO -->
+	<img id='tree_kangaroo_animal' class="tree_kangaroo" src="./images/Tree_Kangaroo.png">
+	<img class="tree_kangaroo_cover" id="tree_kangaroo_cover" src="./images/TreeKangaroo_cover.png">
+
+	<!-- LACE MONITOR -->
+	<img id='lace_monitor_animal' class="lace_monitor" src="./images/Lace_Monitor.png">
+
+	<!-- WHIP BIRD -->
+	<img id="whip_bird_animal" class="whip_bird" src="./images/Whip_Bird.png">
+	<img id="whip_bird_cover" class="whip_bird_cover" src="./images/Whip_Bird_Cover.png">
+
+	<div id="detailpage" class="detailedpage">
+		<button id="sound_button" class="sound_button">
+			<i class="fas fa-circle-thin fa-volume-mute"></i>
+		</button>
+		<p class="sound_instruction">
+			<i class="fas fa-align-center fa-lg fa-rotate-90"></i> This page is best experienced with sound. Use
+			headphones and turn up the volume.
+		</p>
+		<img src="images/BioSeek_logo_horizontal.png" alt="bioseek" class="logo">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeDetailPage()">&times;</a>
+		<div class="container detailpage-structure">
+			<div class="row title-detail-page"></div>
+			<div class="row content-structure"></div>
+		</div>
+	</div>
+
+	<!-- <div class="check_list_animal">
+		<h4>FOUND ANIMALS</h4>
+		<ul>
+		</ul>
+		<p>You have 5 animals left!</p>
+	</div> -->
+
+	<div class="next_envi">
+		<button id="next_envi_button" onclick="closeSplash()"><i class="far fa-arrow-alt-circle-right"></i></button>
+	</div>
+
+	<div id="congrat_popup">
+		<div id="congrat-mess">
+			<h2>CONGRATULATIONS!</h2>
+			<p>You have found all the animals!</p>
+			<p>Do you want to go to the next environment?</p>
+			<div class="buttons">
+				<button type="button" class="btn btn-outline-primary" onclick="nextEnvi()">Yes</button>
+				<button type="button" class="btn btn-outline-primary" onclick="closeCongrat()">No</button>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="js/script.js"></script>
+
+
+<!-- This code is reference from https://stackoverflow.com/a/54464578 -->
+<script>
+	let _tooltip = jQuery.fn.tooltip; // <--- Cache this
+</script>
+<script src="js/jquery-ui-1.12.1/jquery-ui.js"></script>
+
+<script>
+	jQuery.fn.tooltip = _tooltip; // <--- Then restore it here
+</script>
+
+<!-- Reference from: https://getbootstrap.com/ -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous">
+	</script>
+
+</html>
