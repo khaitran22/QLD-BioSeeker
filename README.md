@@ -1,6 +1,6 @@
 # QLD BioSeeker
 <div align="center">
-  ![https://github.com/khaitran22/QLD-BioSeeker/blob/main/images/BioSeek_logo_horizontal.png]
+  <img src='https://github.com/khaitran22/QLD-BioSeeker/blob/main/images/BioSeek_logo_horizontal.png'>
     
   **An interactive web application to visualise Queensland animals with data provided by the Queensland Government, Australia.**
 </div>
