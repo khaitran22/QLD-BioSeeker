@@ -4,4 +4,5 @@
     
   **An interactive web application to visualise Queensland animals with data provided by the Queensland Government, Australia.**
 </div>
+
 ---
