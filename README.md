@@ -1,4 +1,5 @@
 # QLD BioSeeker
-DECO7180 Group Project at the University of Queensland, Australia in 2021.
-
+<div align="center">
 ![logo](https://github.com/khaitran22/QLD-BioSeeker/blob/main/images/BioSeek_logo_horizontal.png)
+**An interactive web application to visualise Queensland animals with data provided by the Queensland Government, Australia.**
+</div>
