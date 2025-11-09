@@ -132,6 +132,18 @@ if (page != 'index.html') {
 
 var user_visit_next_envi = true;
 
+// Get important info
+let proxy = "https://corsproxy.io/?";
+// let kingdoms = {};
+// $.getJSON(proxy+'https://wildnet-pub.science-data.qld.gov.au/api/v1/kingdoms', function (data) {
+// 	for (let i = 0; i < 5; i++) {
+// 		const item = data[i];
+//         kingdoms[item.kingdom_name] = item.kingdom_common_name;
+// 	}
+// });
+
+
+
 
 if (page == 'rain_forest.html') {
 	//#region DEFINE CONSTANT
@@ -206,8 +218,24 @@ if (page == 'rain_forest.html') {
 
 	//#region LOADING ANIMAL DATA
 	for (let order = 0; order < animal_ids.length; order++) {
-		$.getJSON("https://apps.des.qld.gov.au/species/?op=getspeciesbyid&taxonid=" + animal_taxionids[order] + '"', function (data) {
-			texts[animal_ids[order]] = data.Species;
+		let speciesId = animal_taxionids[order];
+		let url = "https://wildnet-pub.science-data.qld.gov.au/api/v1/taxon-details/" + speciesId;
+
+		$.getJSON(proxy+url, function (data) {
+			let animal_kingdom = data.taxonomy[0].taxonomy_name;
+			let animal_phyla = data.taxonomy[1].taxonomy_name;
+			let animal_class = data.taxonomy[2].taxonomy_name;
+			let animal_order = data.taxonomy[3].taxonomy_name;
+			let animal_fam = data.taxonomy[4].taxonomy_name;
+			let link = 'https://wildnet-pub.science-data.qld.gov.au/api/v1/families?kingdom_name='+animal_kingdom+'&phylum_name='+animal_phyla+'&class_name='+animal_class+'&order_name='+animal_order;
+			$.getJSON(proxy+link, function (fam_data) {
+				for (let i = 0; i < fam_data.length; i++) {
+					if(fam_data[i]['family_name'] === animal_fam) {
+						data = { ...data, ...fam_data[i]};
+					};
+				}
+				texts[animal_ids[order]] = data;
+			});
 		});
 	}
 
@@ -312,34 +340,34 @@ if (page == 'rain_forest.html') {
 	});
 
 	function getClassName(data) {
-		var className = data.ClassName + " (<i>" + data.ClassCommonName + "</i>)";
+		var className = data.class_name + " (<i>" + data.class_common_name + "</i>)";
 		return className;
 	}
 
 	function getFamilyName(data) {
-		var familyName = data.FamilyName + " (<i>" + data.FamilyCommonName + "</i>)";
+		var familyName = data.family_name + " (<i>" + data.family_common_name + "</i>)";
 		return familyName;
 	}
 
 	function getScientificName(data) {
-		var scientificName = data.ScientificName.split(" (")[0];
+		var scientificName = data.scientific_name.split(" (")[0];
 		return scientificName;
 	}
 
 	function getAnimalType(data) {
-		var type = data.ClassCommonName.charAt(0).toUpperCase() + data.ClassCommonName.slice(1);
+		var type = data.class_common_name.charAt(0).toUpperCase() + data.class_common_name.slice(1);
 		return type;
 	}
 
 	function getConserStatus(data) {
-		return data.ConservationStatus.NCAStatus;
+		return data.nca_code;
 	}
 
 	function getAnimalCharacteristics(data) {
 		var characteristics = "N/A";
 
-		if (data.PestStatus != "Nil") {
-			return data.PestStatus;
+		if (data.problem != "Nil") {
+			return data.problem;
 		}
 
 		return characteristics;
@@ -351,7 +379,7 @@ if (page == 'rain_forest.html') {
 	}
 
 	function displayConserStatus(data) {
-		var conserCode = data.ConservationStatus.NCAStatusCode;
+		var conserCode = data.nca_code
 		var pos = 0;
 		switch (conserCode) {
 			case "C": case "SL":
@@ -404,14 +432,14 @@ if (page == 'rain_forest.html') {
 			if (found[id] == false) {
 				found[id] = true;
 				found_animal++;
-				$('.check_list_animal ul').append("<li>" + (texts[id].AcceptedCommonName.split(" (")[0]).toUpperCase() + "</li>");
+				$('.check_list_animal ul').append("<li>" + (texts[id].accepted_common_name.split(" (")[0]).toUpperCase() + "</li>");
 				$('.check_list_animal p').replaceWith("<p>You have " + (Object.keys(found).length - found_animal) + " animals left!</p>");
 			}
 			$('#detailpage').css("width", "100%");
 			is_detail_page_open = true;
 			changeBackgroundSoundVolume(is_detail_page_open);
 			$('.title-detail-page').empty();
-			$('.title-detail-page').append("<p class='title'>" + (texts[id].AcceptedCommonName.split(" (")[0]).toUpperCase() + "</p>");
+			$('.title-detail-page').append("<p class='title'>" + (texts[id].accepted_common_name.split(" (")[0]).toUpperCase() + "</p>");
 			$('.content-structure').empty();
 			var detail = getAnimalDetails(texts[id], id);
 			$('.content-structure').append(detail);
@@ -568,8 +596,24 @@ else if (page == 'outback.html') {
 
 	//#region LOADING ANIMAL DATA
 	for (let order = 0; order < animal_ids.length; order++) {
-		$.getJSON("https://apps.des.qld.gov.au/species/?op=getspeciesbyid&taxonid=" + animal_taxionids[order] + '"', function (data) {
-			texts[animal_ids[order]] = data.Species;
+		let speciesId = animal_taxionids[order];
+		let url = "https://wildnet-pub.science-data.qld.gov.au/api/v1/taxon-details/" + speciesId;
+
+		$.getJSON(proxy+url, function (data) {
+			let animal_kingdom = data.taxonomy[0].taxonomy_name;
+			let animal_phyla = data.taxonomy[1].taxonomy_name;
+			let animal_class = data.taxonomy[2].taxonomy_name;
+			let animal_order = data.taxonomy[3].taxonomy_name;
+			let animal_fam = data.taxonomy[4].taxonomy_name;
+			let link = 'https://wildnet-pub.science-data.qld.gov.au/api/v1/families?kingdom_name='+animal_kingdom+'&phylum_name='+animal_phyla+'&class_name='+animal_class+'&order_name='+animal_order;
+			$.getJSON(proxy+link, function (fam_data) {
+				for (let i = 0; i < fam_data.length; i++) {
+					if(fam_data[i]['family_name'] === animal_fam) {
+						data = { ...data, ...fam_data[i]};
+					};
+				}
+				texts[animal_ids[order]] = data;
+			});
 		});
 	}
 	// #endregion
@@ -616,34 +660,34 @@ else if (page == 'outback.html') {
 	});
 
 	function getClassName(data) {
-		var className = data.ClassName + " (<i>" + data.ClassCommonName + "</i>)";
+		var className = data.class_name + " (<i>" + data.class_common_name + "</i>)";
 		return className;
 	}
 
 	function getFamilyName(data) {
-		var familyName = data.FamilyName + " (<i>" + data.FamilyCommonName + "</i>)";
+		var familyName = data.family_name + " (<i>" + data.family_common_name + "</i>)";
 		return familyName;
 	}
 
 	function getScientificName(data) {
-		var scientificName = data.ScientificName.split(" (")[0];
+		var scientificName = data.scientific_name.split(" (")[0];
 		return scientificName;
 	}
 
 	function getAnimalType(data) {
-		var type = data.ClassCommonName.charAt(0).toUpperCase() + data.ClassCommonName.slice(1);
+		var type = data.class_common_name.charAt(0).toUpperCase() + data.class_common_name.slice(1);
 		return type;
 	}
 
 	function getConserStatus(data) {
-		return data.ConservationStatus.NCAStatus;
+		return data.nca_code;
 	}
 
 	function getAnimalCharacteristics(data) {
 		var characteristics = "N/A";
 
-		if (data.PestStatus != "Nil") {
-			return data.PestStatus;
+		if (data.problem != "Nil") {
+			return data.problem;
 		}
 
 		return characteristics;
@@ -655,7 +699,7 @@ else if (page == 'outback.html') {
 	}
 
 	function displayConserStatus(data) {
-		var conserCode = data.ConservationStatus.NCAStatusCode;
+		var conserCode = data.nca_code
 		var pos = 0;
 		switch (conserCode) {
 			case "C": case "SL":
@@ -744,14 +788,14 @@ else if (page == 'outback.html') {
 				found[id] = true;
 				found_animal++;
 				var a = texts[id];
-				$('.check_list_animal ul').append("<li>" + (texts[id].AcceptedCommonName.split(" (")[0]).toUpperCase() + "</li>");
+				$('.check_list_animal ul').append("<li>" + (texts[id].accepted_common_name.split(" (")[0]).toUpperCase() + "</li>");
 				$('.check_list_animal p').replaceWith("<p>You have " + (Object.keys(found).length - found_animal) + " animals left!</p>");
 			}
 			$('#detailpage').css("width", "100%");
 			is_detail_page_open = true;
 			changeBackgroundSoundVolume(is_detail_page_open);
 			$('.title-detail-page').empty();
-			$('.title-detail-page').append("<p class='title'>" + (texts[id].AcceptedCommonName.split(" (")[0]).toUpperCase() + "</p>");
+			$('.title-detail-page').append("<p class='title'>" + (texts[id].accepted_common_name.split(" (")[0]).toUpperCase() + "</p>");
 			$('.content-structure').empty();
 			var detail = getAnimalDetails(texts[id], id);
 			$('.content-structure').append(detail);
