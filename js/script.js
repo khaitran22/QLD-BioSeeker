@@ -680,7 +680,7 @@ else if (page == 'outback.html') {
 	}
 
 	function getConserStatus(data) {
-		return data.nca_code;
+		return data.nca_desc;
 	}
 
 	function getAnimalCharacteristics(data) {
