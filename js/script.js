@@ -360,7 +360,7 @@ if (page == 'rain_forest.html') {
 	}
 
 	function getConserStatus(data) {
-		return data.nca_code;
+		return data.nca_desc;
 	}
 
 	function getAnimalCharacteristics(data) {
